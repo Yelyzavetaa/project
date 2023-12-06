@@ -1,0 +1,20 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Robots</title>
+    <!-- <link rel="stylesheet" href="css/style.css"> -->
+</html>
+
+<body>
+    <h1>Robots</h1>
+    <ul>
+        {% for robot in robots %}
+            <li>{{ robot.name }}</li>
+            <li>{{ robot.id }}</li>
+            <li><img src="{{ robot.photo.url }}" alt="robot"></li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
