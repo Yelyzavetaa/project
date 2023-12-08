@@ -9,7 +9,7 @@ all fields are integer
 class Robot(models.Model):
     robot_id = models.IntegerField()
     name = models.CharField(max_length=100)
-    photo = models.ImageField(upload_to='')
+    photo = models.ImageField(upload_to="")
     hls = models.FloatField()
     ff = models.FloatField()
     bm = models.FloatField()
