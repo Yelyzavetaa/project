@@ -4,32 +4,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <!-- Option 1: Include in HTML -->
+    
     <title>Robots</title>
-    <!-- <link rel="stylesheet" href="css/style.css"> -->
+    <link rel="stylesheet" href="{% static 'css/style.css'%}?{% now 'U' %}">
 </html>
 
-<body>
-    <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
-        <div class="container">
-            <div class="col-md-3 ">
+<body class="container-fluid d-flex flex-column min-vh-100">
+    <!-- <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom"> -->
+    <header class="navbar navbar-expand-xxl navbar-light bg-light">
+        <!-- <div class="container"> -->
+        <nav class="container-xxl flex-wrap flex-lg-nowrap">
+            <div class="d-flex gap-2 mb-3 ">
                 <button type="button" class="btn btn-outline-primary me-2">About</button>
                 <button type="button" class="btn btn-outline-primary me-2">How to</button>
-                <button type="button" class="btn btn-outline-primary">Reset filters</button>
+                <button type="button" class="btn btn-outline-danger" >
+                    <i class="bi bi-x-lg"></i>
+                      <span>Reset Filters </span>
+                </button>
               </div>
-          </div>
+            </nav>
+          <!-- </div> -->
       </header>
-    <h1>Robots</h1>
-    <ul>
-        {% for robot in robots %}
-            <li>{{ robot.name }}</li>
-            <li>{{ robot.id }}</li>
-            <li><img src="{{ robot.photo.url }}" alt="robot"></li>
-            
-        {% endfor %}
-    </ul>
+      <div class="container-xxl">
+        <h1>Robots</h1>
+        <ul>
+            {% for robot in robots %}
+                <li>{{ robot.name }}</li>
+                <li>{{ robot.id }}</li>
+                <li><img src="{{ robot.photo.url }}" alt="robot"></li>
+                
+            {% endfor %}
+        </ul>
+    </div>
+    
 
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
