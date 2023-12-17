@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <script src="https://d3js.org/d3.v5.min.js"></script>
     <!-- Option 1: Include in HTML -->
     
     <title>Robots</title>
@@ -15,8 +16,8 @@
     <link rel="stylesheet" href="{% static 'css/styleguide.css'%}?{% now 'U' %}" />
     <title>Document</title>
 </head>
-<body class="container-fluid d-flex flex-column min-vh-100">  
-    <header class="navbar navbar-expand-xxl navbar-light bg-light">
+<body class="container-fluid d-flex flex-column min-vh-100 overflow-hidden">  
+    <header class="navbar navbar-expand-xxl navbar-light bg-light ">
     <!-- <div class="container"> -->
         <nav class="container-xxl flex-wrap flex-lg-nowrap">
             <div class="d-flex gap-2 mb-3 ">
@@ -30,7 +31,7 @@
         </nav>
         <!-- </div> -->
     </header>
-    <div class="row row-cols-1 mx-5 gy-3 h-100">
+    <div class="row">
         <div class="col">
             <div class="row g-0 w-100">
                 <div class="col">
@@ -44,12 +45,15 @@
                 </div>
             </div>
         </div>
+    </div>
+    <div class="row row-cols-1 mx-5 gy-2 h-100 mb-4 ">
+        
         <div class="col h-50">
             <div class="row gx-3 h-100">
                 <div class="col">
                     <div class="row h-100 row-cols-1 gx-0  gy-3 " >
                         <div class="col filters">
-                            <span >age</span> 
+                            <div id="chart-container"></div>
                         </div>  
 
                         <div class="col filters">
@@ -109,12 +113,39 @@
             </div>
         </div>
         <div class="col h-50">
-            <div class="row g-0 h-50">
+            <div class="row g-0 h-100">
                 <div class="col">
+                    <div class="filters h-100">
                     <span>hello</span>
+                </div>
                 </div>
             </div>
         </div>    
     </div>
+
+    <script>
+        // Your D3.js code goes here
+        // For example, let's create a simple bar chart
+    
+        // Sample data
+        var data = [4, 8, 15, 16, 23, 42];
+    
+        // Create an SVG container
+        var svg = d3.select("#chart-container")
+            .append("svg")
+            //.attr("width", 300)
+            //.attr("height", 150);
+    
+        // Create bars
+        svg.selectAll("rect")
+            .data(data)
+            .enter().append("rect")
+            .attr("x", function (d, i) { return i * 30; })
+            .attr("y", function (d) { return 150 - d; })
+            .attr("width", 15)
+            .attr("height", function (d) { return d; })
+            .attr("fill", "steelblue");
+    </script>
+    
 </body>
 </html>
