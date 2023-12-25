@@ -35,8 +35,9 @@ $(document).ready(function () {
                     ;
                 
                 // get the data
-                d3.csv("https://raw.githubusercontent.com/holtzy/data_to_viz/master/Example_dataset/1_OneNum.csv").then( function(data) {
+                d3.csv("D:\Tanskaya\SWPS\dyplom\results_1.csv").then( function(data) {
                 
+                //console.log(data.columns);
                 // add the x Axis
                 const x = d3.scaleLinear()
                             .domain([0, 1000]) // wartosci od ile do ile
@@ -77,7 +78,7 @@ $(document).ready(function () {
             let left_side_height = $("#chart-container").height();
             let left_side_width = $("#chart-container").width();
             
-            draw_density("#chart-container", null, left_side_height, left_side_width);
+            draw_density("#chart-container", "Twój wiek (liczba całkowita, np. 30)", left_side_height, left_side_width);
             draw_density("#chart-container1", null, left_side_height, left_side_width);
             draw_density("#chart-container2", null, left_side_height, left_side_width);
             draw_density("#chart-container3", null, left_side_height, left_side_width);
