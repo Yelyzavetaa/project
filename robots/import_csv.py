@@ -1,7 +1,6 @@
 import csv
 from datetime import datetime
-from robots.models import Result 
-
+from .models import Result
 
 def import_csv(file_path):
     with open(file_path, 'r') as file:

@@ -6,5 +6,6 @@ from .models import Result, Robot
 def main(request):
     return render(request, 'main.html', {
         'robots': Robot.objects.all(),
+        'results': Result.objects.all(),
     })
 
