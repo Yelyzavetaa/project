@@ -19,43 +19,93 @@ $(document).ready(function () {
     }
 
     function draw_density(container_id, data, column, height, width) {
+
+        function brushed({selection}) {
+            if (selection) {
+            svg.property("value", selection.map(x.invert, x).map(d3.utcDay.round));
+            svg.dispatch("input");
+            }
+        }
+
+        function brushended({selection}) {
+            if (!selection) {
+                gb.call(brush.move, [0, 0]);
+            } else {
+
+            }
+
+        }
         
         let d_column = [];
         data.forEach(function (d) {
             d_column.push(d[column]);
         });
+
+        let count = d_column.reduce(function (value, value2) {
+            return (
+                value[value2] ? ++value[value2] :(value[value2] = 1),
+                value
+            );
+        }, {});
+
+        let max_count = Math.max(...Object.values(count));
         console.log(d_column);
         console.log(Math.max(...d_column));
+        console.log(max_count);
         
         const svg = d3.select(container_id)
             .append("svg")
             .attr("viewBox", [0, 0, width, height])
             .append("g");
+        
+            // .call(brush.move, defaultSelection);
 
         const x = d3.scaleLinear()
-            .domain([0, Math.max(...d_column)]) // Adjust the range as needed
+            .domain([0, Math.max(...d_column) + 1])
             .range([0, width]);
+        
+    
 
         const y = d3.scaleLinear()
             .range([height, 0])
             //.domain([0, 0.1]); // Adjust the domain as needed
-            .domain(d3.extent(d_column, function (d) { return d; })).nice();
+            .domain([0, max_count + 1]); // Adjust the domain as needed
         //data structure is list of dicts, each dict has keys: M1, M2, M3, M4
-        
 
-        const kde = kernelDensityEstimator(kernelEpanechnikov(7), x.ticks(40));
+        
+        // d3.select(container_id + " svg")
+        //     .append("g")
+        //     .attr("transform", "translate(30, 0)")
+        //     .call(d3.axisLeft(y));
+        
+        // d3.select(container_id + " svg")
+        //     .append("g")
+        //     .attr("transform", "translate(0," + 10 + ")")
+        //     .call(d3.axisBottom(x).ticks(Math.max(...d_column) + 1));
+        
+        const kde = kernelDensityEstimator(kernelEpanechnikov(0.15), x.ticks(Math.max(...d_column) + 2)); // Adjust the bandwidth as needed
         const density = kde(d_column);
+        console.log(density);
+        const brush = d3.brushX()
+            .extent([[0, 0], [width, height]])
+            .on("end", brushended)
+            .on("brush", brushed);
+        
+        const gb = svg.append("g")
+            .call(brush)
+            .call(brush.move, [0, 0]);
         //const density = kde(data.map(function (d) { return d[column]; }));
+
 
         svg.append("path")
             .datum(density)
             .attr("fill", "#69b3a2")
             .attr("opacity", ".8")
-            .attr("stroke", "#000")
-            .attr("stroke-width", 1)
+            // .attr("stroke", "#000")
+            .attr("stroke-width", 2)
             .attr("stroke-linejoin", "round")
             .attr("d", d3.line()
-                .curve(d3.curveBasis)
+                .curve(d3.curveBumpX)
                 .x(function (d) { return x(d[0]); })
                 .y(function (d) { return y(d[1]); })
             );
